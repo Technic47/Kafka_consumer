@@ -1,25 +1,11 @@
 version: '3.1'
 
 services:
-  db:
-    image: postgres:latest
-    restart: always
-    container_name: db
+  consumer:
+    build:
+      context: .
+    container_name: consumer_app_V1.0
+#    restart: always
     ports:
-      - "5555:5432"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=1999
-      - POSTGRES_DB=kafka
+      - "8081:8081"
 
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    container_name: pgadmin
-    depends_on:
-      - db
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: technic47@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: 5*!zGa7f
-    ports:
-      - "5050:80"
