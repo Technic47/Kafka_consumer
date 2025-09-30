@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+  consumer:
+    build:
+      context: .
+    container_name: consumer_app_V1.0
+#    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      kafkaUrl: host.docker.internal:9092
+      dbURL: jdbc:postgresql://host.docker.internal:5432/kafka
+    networks:
+      kafka-network:
+
+networks:
+  kafka-network:
+

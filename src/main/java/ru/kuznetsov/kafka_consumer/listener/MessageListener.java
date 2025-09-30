@@ -14,10 +14,11 @@ import java.util.Date;
 public class MessageListener {
 
     private final static String GROUP_ID = "tester";
+    public final static String MESSAGE_TOPIC_NAME = "message";
 
     private final CommentService commentService;
 
-    @KafkaListener(topics = "baeldung", groupId = GROUP_ID)
+    @KafkaListener(topics = MESSAGE_TOPIC_NAME, groupId = GROUP_ID)
     public void listenGroupFoo(String message) {
         commentService.save(new CommentEntity(message, GROUP_ID, new Date()));
     }
