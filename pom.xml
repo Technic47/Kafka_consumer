@@ -10,7 +10,7 @@
     </parent>
     <groupId>ru.kuznetsov</groupId>
     <artifactId>Kafka_consumer</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <name>Kafka_consumer</name>
     <description>Kafka_consumer</description>
 
@@ -31,17 +31,20 @@
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -81,6 +84,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>Kafka_consumer</finalName>
     </build>
 
 </project>

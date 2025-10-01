@@ -1,20 +1,21 @@
 package ru.kuznetsov.kafka_consumer.listener;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-import ru.kuznetsov.kafka_consumer.model.CommentEntity;
+import ru.kuznetsov.kafka_consumer.dto.MessageDto;
 import ru.kuznetsov.kafka_consumer.service.CommentService;
-
-import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
 public class MessageListener {
 
+    private final ObjectMapper objectMapper = new ObjectMapper();
     private final static String GROUP_ID = "tester";
     public final static String MESSAGE_TOPIC_NAME = "message";
 
@@ -24,7 +25,12 @@ public class MessageListener {
 
     @KafkaListener(topics = MESSAGE_TOPIC_NAME, groupId = GROUP_ID)
     public void listenGroupFoo(String message) {
-        logger.info("Received message: {}", message);
-        commentService.save(new CommentEntity(message, GROUP_ID, new Date()));
+        logger.info("Receiving message: {}", message);
+        try {
+            commentService.save(objectMapper.readValue(message, MessageDto.class));
+        } catch (JsonProcessingException e) {
+            logger.error("Error while saving comment: {}", message);
+            logger.error(e.getMessage());
+        }
     }
 }
